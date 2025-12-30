@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+
+  <title>Пример сайта</title>
+  <style>
+    @font-face {
+      font-family: "MyFont";
+      src: url("fonts/5kaSansDesign-Regular.otf") format("opentype");
+    }
+    @font-face {
+      font-family: "MyFont";
+      src: url("fonts/5kaSansDesign-Black.otf") format("opentype");
+      font-weight: bold;
+    }
+
+    /* Сброс стилей */
+    body {
+      margin: 0;
+      font-family: "MyFont", sans-serif;
+      background: #f5f5f5;
+    }
+
+    /* По умолчанию показываем desktop */
+    .desktop-wrapper { display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .mobile-wrapper { display: none; }
+
+    /* На мобильных — наоборот */
+    @media screen and (max-width: 767px) {
+      .desktop-wrapper { display: none; }
+/* wrapper для мобилок */
+.mobile-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh; /* занимает весь экран */
+  padding: 20px;     /* отступ от краев */
+  box-sizing: border-box;
+  overflow: hidden;  /* запрет скролла */
+  justify-content: flex-start; /* контент сверху */
+}
+    }
+
+    /* --- Desktop card --- */
+.card {
+  display: flex;            /* делаем flex-контейнером */
+  flex-direction: row;      /* слева-направо */
+  width: 100%;
+  height: 100vh;
+  background-color: #02923A;
+  padding: 24px;
+  color: #0f172a;
+  overflow: hidden;
+  box-sizing: border-box;
+  gap: 20px;               /* отступ между блоками */
+}
+
+.left-block {
+  width: 1200px; /* фиксированная ширина */
+  height: 1000px; /* фиксированная высота */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  z-index: 2;
+}
+
+.side-img {
+  position: absolute;
+  width: 120px; /* размер дополнительных картинок */
+  border-radius: 8px;
+  z-index: 1;   /* ниже основного изображения */
+}
+.right-block {
+  width: 400px; /* фиксированная ширина */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  gap: 20px;
+}
+.right-block p{
+  font-size: 32px;
+}
+.right-block h2{
+  font-size: 32px;
+}
+.qr-img {
+  width: 150px;
+  height: 150px;
+}
+/* основной блок main */
+.main {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  padding-bottom: 100px; /* место для фиксированного блока */
+}
+
+.block,
+.block_2 {
+  width: 100%;           /* полностью занимает ширину родителя */
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: #fff;
+  box-sizing: border-box; /* чтобы padding учитывался внутри */
+  text-align: center;
+}
+
+    .block.green { background: #02923A; color: #fff; }
+    .block img { max-width: 150px; margin-bottom: 15px; }
+
+    .play-btn {
+      padding: 20px; width: 99%; height: 60px; font-size: 18px;
+      border: none; border-radius: 8px; background: rgba(87, 87, 86, 1); color: #fff;
+      cursor: pointer; margin-top: 20px;
+    }
+.mini-block {
+  position: fixed;
+  bottom: 20px;      /* отступ от нижнего края */
+  left: 50%;         /* центрируем по горизонтали */
+  transform: translateX(-50%);
+  
+  background: #fff;
+padding: 5px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+
+  font-size: 16px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 9999;
+}
+
+.ok-btn {
+  margin-top: 10px;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 6px;
+  background: #575756;
+  color: #fff;
+  cursor: pointer;
+}
+
+    .g { color: #02923A; text-decoration: underline; }
+  </style>
+  <!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103834904', 'ym');
+
+    ym(103834904, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/103834904" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+  <!-- ПК -->
+<div class="desktop-wrapper">
+  <div class="card">
+    <!-- Левый блок с основным изображением и дополнительными картинками -->
+<div class="left-block">
+  <!-- Дополнительные картинки с индивидуальными позициями -->
+  <img src="img/x1.png" class="side-img" style="top: 30%; left: 10%;">
+  <img src="img/x2.png" class="side-img" style="top: 11%; left: 18%;">
+  <img src="img/x3.png" class="side-img" style="top: 18%; left: 29%;">
+  
+  <!-- Основное изображение -->
+  <img src="img/iPhone.png" class="main-img" alt="iPhone">
+</div>
+
+
+    <!-- Правый блок с текстом, QR и подписью -->
+    <div class="right-block">
+      <h2>Играй на своем <br> мобильном устройстве!</h2>
+<a href="https://future5ka.fut.ru/" target="_blank">
+  <img src="img/qrcode.png" class="qr-img" alt="QR-код">
+</a>
+
+
+
+      <p>Просканируй QR-код камерой <br> телефона и начинай игру</p>
+    </div>
+  </div>
+</div>
+
+  <!-- Мобилки -->
+  <div class="mobile-wrapper">
+    <div class="main">
+      <div class="block green">
+        <img src="img/1.png" alt="Логотип">
+        <p><strong>«Пятёрочка»</strong>— не просто магазин, <br> а цифровая революция в ритейле! Здесь ИИ управляет поставками, роботы трудятся на складах, <br> а покупатели — совершают покупки без помощи кассиров.</p>
+      </div>
+      <div class="block_2">
+        <p><b>Теперь ты — предприниматель, управляющий магазином<br/>будущего.</b></p>
+        <p>В твоих руках — технологии, которые помогут создать суперэффективную схему магазина. Чем круче твои решения, тем выше шансы на победу. А ещё в игре можно получить классный <b>промокод</b> на покупку — попробуй найти его!</p>
+        <button class="play-btn">Играть</button>
+      </div>
+<div class="mini-block" id="cookie-block">
+  <p>Пользуясь нашим сайтом, ты соглашаешься <br> 
+    с тем, что <strong class="g">мы используем cookies</strong>
+  </p>
+  <button class="ok-btn" onclick="acceptCookies()">
+    Окей
+  </button>
+</div>
+    </div>
+  </div>
+
+  <script>
+  function acceptCookies() {
+    window.location.href = "https://fut.ru/cookie";
+  }
+const bnt = document.querySelector(".play-btn")
+bnt.onclick = async () => {
+    await ym(103834904,'reachGoal','start');
+    setTimeout(() => {
+      window.location.href = "play.html"; 
+    }, 0);
+}
+    document.addEventListener("DOMContentLoaded", function() {
+      const cookieBlock = document.getElementById("cookie-block");
+      if (localStorage.getItem("cookiesAccepted") === "true") {
+        cookieBlock.style.display = "none";
+      }
+    });
+    function acceptCookies() {
+      localStorage.setItem("cookiesAccepted", "true");
+      document.getElementById("cookie-block").style.display = "none";
+    }
+  </script>
+</body>
+</html>

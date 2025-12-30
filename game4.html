@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Все платформы с настраиваемыми изображениями</title>
+<style>
+    @font-face {
+      font-family: "MyFont";
+      src: url("fonts/5kaSansDesign-Regular.otf") format("opentype");
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: "MyFont";
+      src: url("fonts/5kaSansDesign-Black.otf") format("opentype");
+      font-weight: 900;
+    }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "MyFont", sans-serif;
+      overflow-y: hidden; /* запрет вертикального */
+  overflow-x: hidden;
+
+
+}
+.main-block {
+     display: flex; 
+     flex-direction: column;
+      height: 100vh; 
+        background-color: rgba(221, 221, 221, 0.2);
+        
+
+}
+.top-block {
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Раздвигаем блоки по краям */
+    padding: 0 20px; /* Отступы от краев экрана */
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Дополнительно гарантируем распределение */
+}
+
+.left-block { 
+box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 15px; 
+    padding: 5px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    color: #333; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-width: 100px; 
+    background-color: rgba(255, 255, 255, 0.8);
+} 
+.right-block { 
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 15px; 
+    padding: 5px; 
+    display: flex; 
+    background-color: rgba(255, 255, 255, 0.8);
+ } 
+.item {
+    padding: 5px 5px; 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 14px; 
+    color: #555; 
+    background-color: rgba(249, 249, 249, 0.8); 
+} 
+.item img { 
+    width: 18px; 
+    height: 18px; 
+}
+.content-wrapper {
+  flex: 1 1 auto;  /* гибкий контейнер */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* запрет вертикального */
+
+}
+
+.middle-block {
+  position: relative;
+  flex: none;
+  width: 100%;
+  
+  aspect-ratio: 12/7; /* или другое подходящее */
+  margin: 0 auto;
+}
+
+.bottom-block {
+
+  position: relative;
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 5px;
+}
+
+/* Платформы */
+.platform, .platform-shadow {
+  position: absolute;
+  right: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.platform {
+  background-color: #6FC882;
+}
+
+.platform-shadow {
+  background-color: #02923A;
+  transform: translateY(10px);
+  z-index: -1;
+}
+
+/* Изображения на платформах */
+.platform-image {
+  position: absolute;
+  transform-origin: top left;
+  z-index: 1;
+  cursor: pointer;
+
+}
+
+/* Меню */
+.bottom-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.bottom-menu .menu-left {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.bottom-menu .menu-right {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid #ffffff;
+  background-color: white;
+  padding: 7px 8px;
+  border-radius: 10px;
+}
+
+.bottom-menu .menu-right img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Контейнер карточек */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Каждая карточка */
+.card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: calc(21% - 10px); /* 4 карточки в ряд */
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+    z-index: 0; /* чтобы фон был ниже */
+
+}
+
+/* Верхняя цифра и плюс */
+.card-top {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 10px;
+
+}
+
+.card-top img {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* Карточка */
+.card-img {
+  margin-top: 25px; /* сдвигаем ниже card-top */
+  width: 40px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Блок кнопок под карточками */
+.cards-buttons {
+  display: flex;
+  flex-direction: row; /* горизонтально */
+  gap: 10px; /* промежуток между кнопками */
+  justify-content: center; /* выравнивание по центру */
+  width: 100%;
+}
+
+.cards-buttons .btn {
+  flex: 0 0 45%; /* каждая кнопка занимает примерно 45% ширины контейнера */
+  padding: 16px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.cards-buttons .btn-reset {
+  background-color: #D9D9D9;
+  color: #474646;
+  border: 1px solid #474646;
+}
+
+.cards-buttons .btn-complete {
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+}
+
+
+/* Текст под картинкой */
+.card-text {
+  margin-top: 5px;
+  text-align: center;
+  font-size: 10px;
+}
+.text_i{
+    color: #02923A;
+}
+
+
+@media screen and (max-width: 430px)  {
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 30px;
+    width: 100%;
+        bottom: 160px;
+  }
+.bottom-block{
+bottom: 270px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 450px)  {
+        img[data-platform="1"] {
+    top: 120px !important;
+  }
+  img[data-platform="2"] {
+    top: 250px !important;
+  }
+  img[data-platform="3"] {
+    top: 400px !important;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 30px;
+    width: 100%;
+        bottom: 160px;
+  }
+.bottom-block{
+bottom: 270px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 414px) {
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 30px;
+    width: 100%;
+        bottom: 160px;
+  }
+.bottom-block{
+bottom: 270px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+
+
+@media screen and (max-width: 390px){
+      img[data-platform="1"] {
+    top: 120px !important;
+      z-index: 999999;
+  }
+  img[data-platform="2"] {
+    top: 260px !important;
+      z-index: 999999;
+  }
+  img[data-platform="3"] {
+    top: 410px !important;
+      z-index: 999999;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+      z-index: 999999;
+  }
+  .platform-shadow{
+    z-index: -1;
+  } 
+  .platform{
+    z-index: 1;
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+          z-index: 999999;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+          z-index: 999999;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+          z-index: 999999;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+          z-index: 999999;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+          z-index: 999999;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 40px;
+    width: 100%;
+        bottom: 160px;
+        right: 5%;
+  }
+.bottom-block{
+bottom: 270px;
+}
+  .card {
+    width: calc(21.0% - 6px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+
+
+@media screen and (max-width: 375px){
+      img[data-platform="1"] {
+    top: 120px !important;
+  }
+  img[data-platform="2"] {
+    top: 260px !important;
+  }
+  img[data-platform="3"] {
+    top: 410px !important;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 40px;
+    width: 100%;
+        bottom: 160px;
+        right: 5%;
+  }
+.bottom-block{
+bottom: 270px;
+}
+  .card {
+    width: calc(21.0% - 6px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 384px){
+      img[data-platform="1"] {
+    top: 120px !important;
+  }
+  img[data-platform="2"] {
+    top: 260px !important;
+  }
+  img[data-platform="3"] {
+    top: 410px !important;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 40px;
+    width: 100%;
+        bottom: 160px;
+        right: 5%;
+  }
+.bottom-block{
+bottom: 270px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 360px) {
+      img[data-platform="1"] {
+    top: 140px !important;
+  }
+  img[data-platform="2"] {
+    top: 280px !important;
+  }
+  img[data-platform="3"] {
+    top: 430px !important;
+  }
+  img[data-platform="4"] {
+    top: 90px !important;
+  }
+  img[src="img/700.png"] {
+    top: 200px !important;
+  }
+  img[src="img/600.png"] {
+    top: 310px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 160px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 280px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 390px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 190px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 290px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 60px;
+    width: 100%;
+        bottom: 160px;
+        right: 10%;
+  }
+.bottom-block{
+bottom: 270px;
+}
+  .card {
+    width: calc(21.0% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+
+
+/* Контейнер модального окна (фон) */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.5); 
+  justify-content: center;
+  align-items: flex-end; /* позиционируем снизу */
+  padding-bottom: 20px; 
+  box-sizing: border-box;
+}
+
+/* Контент модального окна */
+.modal-content {
+  background-color: #fefefe;
+  width: 90%; 
+  max-width: 600px;
+  height: 80vh; 
+  border-radius: 15px 15px 0 0; 
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.close {
+  position: absolute;
+  right: 0%;
+  top: -50px;
+  background-color: white;
+  border-radius: 15px;
+  width: 50px;
+  height: 50px;
+  color: #aaa;
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 40%;
+  min-height: 40%;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.modal-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.modal-left {
+  border:1px solid #02923A;
+  display: flex;
+  padding: 5px;
+  border-radius: 10px;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-right {
+  border:1px solid #02923A;
+  display: flex;
+  padding: 5px;
+  border-radius: 10px;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-description {
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 12px;
+  overflow-y: auto;
+  flex: 1;
+  width: 100%;
+}
+
+.modal-add-btn {
+  width: 90%;
+  height: 60px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+}
+.p{
+  z-index: 999;
+}
+@keyframes cardHighlight {
+  0%   { box-shadow: 0 0 0px 0 #02923A; }
+  50%  { box-shadow: 0 0 20px 10px #02923A}
+  100% { box-shadow: 0 0 0px 0 #02923A }
+}
+
+.card.highlight {
+  background-color: #ffffff;
+  transition: background-color 0.5s ease;
+}
+.card.highlight::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #C4C4C4 0%, #C4C4C4 100%);
+  animation: fadeGray 10s linear forwards;
+  z-index: -1;
+  pointer-events: none; /* чтобы не блокировало клики */
+}
+
+@keyframes fadeGray {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+.card.clicked {
+  background-color: #C4C4C4;
+  transition: background-color 0.5s ease;
+}
+/* Фон модалки */
+.MMM {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Контейнер модалки */
+.mmm-content {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: scaleUp 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+/* Текст */
+.mmm-text {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Контейнер кнопок */
+.mmm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* расстояние между кнопками */
+}
+
+/* Кнопки */
+.mmm-close_2 {
+  padding: 20px 80px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Стили отдельных кнопок */
+.mmm-close {
+  padding: 20px 50px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+/* Анимации */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes scaleUp {
+  from {transform: scale(0.8); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+
+/* Фон модалки */
+.TTT {
+  display: none; /* скрыто по умолчанию */
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6); /* затемнение */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Контейнер */
+.ttt-content {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: scaleUp 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+/* Текст */
+.ttt-text {
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: bold;
+  text-align: left;
+}
+.ttt-text_2 {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #9c9c9c;
+  font-weight: bold;
+    text-align: left;
+}
+.ttt-text_3 {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #9c9c9c;
+  font-weight: bold;
+    text-align: left;
+}
+
+/* Кнопка */
+.ttt-close {
+  padding: 20px 120px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.ttt-close:hover {
+  background: #1e7e34;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes scaleUp {
+  from {transform: scale(0.8); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+.card.gray {
+  background-color: #c4c4c4 !important;
+}
+.s{
+  color: #575756;
+}
+.i{
+  color: #02923A;
+}
+.ZZZ {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.zzz-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  font-size: 18px;
+}
+
+.l{
+    text-decoration: underline;
+      font-weight: 100; /* или 400 */
+
+}
+.modal.FGH {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+.modal.FGH_2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content.FGH {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  height: 220px;
+  text-align: center;
+}
+.modal-content.FGH_2 {
+  background: white;
+  padding: 10px 50px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  height: 200px;
+  text-align: center;
+}
+
+.modal-content.FGH p {
+  margin-bottom: 0px;
+  padding: 0;
+  font-size: 14px;
+}
+
+.modal-content.FGH button {
+  padding: 20px 15px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+#retryBtn{
+  width: 90%;
+  margin-top: 20px;
+}
+#errorOkBtn{
+  width: 80%;
+  height: 50px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* крестик */
+.closeBtn_2 {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.closeBtn:hover {
+  color: #ff0000;
+}
+.retry{
+  color: #02923A;
+}
+</style>
+<link rel="stylesheet" href="styles.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Yandex.Metrika counter -->
+<!-- <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103834904', 'ym');
+
+    ym(103834904, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/103834904" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+/Yandex.Metrika counter -->
+</head>
+<body>
+
+<div class="main-block"> <!-- Верхний блок -->
+     <div class="top-block"> 
+        <div class="container">
+             <div class="left-block">0/100</div> 
+             <div class="right-block"> 
+                <div class="item"><span>0</span><img src="img/2.svg" alt="+"></div> 
+                <div class="item"><span>0</span><img src="img/3.svg" alt="+"></div>
+                <div class="item"><span>0</span><img src="img/4.svg" alt="+"></div>
+                <div class="item"><span>0</span><img src="img/5.svg" alt="+"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="promocode-modal" class="modal promocode-modal modal-new">
+      <div class="modal-content content-new">
+          <p><b>Первое задание выполнено!</b></p>
+          <br/>
+          <p>Ты сделал первый шаг к магазину будущего — отличная работа!</p>
+          <p class="bonus-text">Лови бонус за старт</p>
+          <div class="copy-field">ZACHOT</div>
+          <p class="copy-text">Всем новым пользователям -600 рублей</p>
+          <p class="copy-text copy-text-last">на заказ от 1500 рублей с 15.01.2026 по 28.02.2026</p>
+          <p>Это только начало — прокачай</p>
+          <p>магазин на максимум!</p>
+          <button id="promocode-button" class="modal-button button-next">
+            Дальше
+            <svg class="next-icon" width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.07088 8.07112C8.4614 7.6806 8.4614 7.04743 8.07088 6.65691L1.70691 0.292946C1.31639 -0.0975781 0.683225 -0.097578 0.292701 0.292946C-0.0978233 0.683471 -0.0978232 1.31664 0.292701 1.70716L5.94956 7.36401L0.292702 13.0209C-0.0978221 13.4114 -0.0978221 14.0446 0.292702 14.4351C0.683227 14.8256 1.31639 14.8256 1.70692 14.4351L8.07088 8.07112ZM6.36377 7.36401L6.36377 8.36401L7.36377 8.36401L7.36377 7.36401L7.36377 6.36401L6.36377 6.36401L6.36377 7.36401Z" fill="white"/>
+            </svg>
+          </button>
+      </div>
+    </div>
+
+    <div id="job-modal" class="modal promocode-modal modal-new">
+      <div class="modal-content content-new">
+          <p><b>Отличный ход!</b></p>
+          <br/>
+          <p>Так уверенно управлять магазином — это уже уровень.</p>
+          <br/>
+          <p>В «Пятёрочке» есть программа развития «Директор магазина — партнёр», где директор магазина действует как предприниматель и реально влияет на бизнес.</p>
+          <br/>
+          <p>Хочешь так же? Тогда переходи по ссылке и подавай заявку!</p>
+             <button onclick="window.open('https://fut.ru/s/5ka_game', '_blank')" id="apply-job-button" class="modal-button button-next button-active">
+            Подать заявку
+          </button>
+          <button id="next-job-button" class="modal-button button-next">
+            Играть дальше
+            <svg class="next-icon" width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.07088 8.07112C8.4614 7.6806 8.4614 7.04743 8.07088 6.65691L1.70691 0.292946C1.31639 -0.0975781 0.683225 -0.097578 0.292701 0.292946C-0.0978233 0.683471 -0.0978232 1.31664 0.292701 1.70716L5.94956 7.36401L0.292702 13.0209C-0.0978221 13.4114 -0.0978221 14.0446 0.292702 14.4351C0.683227 14.8256 1.31639 14.8256 1.70692 14.4351L8.07088 8.07112ZM6.36377 7.36401L6.36377 8.36401L7.36377 8.36401L7.36377 7.36401L7.36377 6.36401L6.36377 6.36401L6.36377 7.36401Z" fill="white"/>
+            </svg>
+          </button>
+      </div>
+    </div>
+
+  <div class="content-wrapper">
+
+<div class="middle-block">
+
+  <!-- Платформа 1 -->
+  <div class="platform-shadow" data-platform="1" style="clip-path: polygon(12px 166px, 128px 98px, 209px 145px, 94px 214px);"></div>
+  <div class="platform" data-platform="1" style="clip-path: polygon(12px 166px, 128px 98px, 209px 145px, 94px 214px);"></div>
+  <img src="img/300.png" class="platform-image drop-zone" data-platform="1" 
+       style="top: 101px; left: 16px; width: 144px; height: 133px; transform: rotateX(-27deg) rotateY(0deg) rotateZ(0deg);">
+  <div class="platform-text" data-platform="1"
+       style="position:absolute; top: 120px; left: -40px; padding: 5px; transform: rotateZ(-30deg); background-color: white; color: #02923A; border: 1px solid #02923A; font-size:14px; text-align:center;">
+    Зона ожидания заказа
+  </div>
+
+  <!-- Платформа 2 -->
+  <div class="platform-shadow" data-platform="2" style="clip-path: polygon(11px 276px, 121px 216px, 240px 286px, 135px 350px);"></div>
+  <div class="platform" data-platform="2" style="clip-path: polygon(11px 276px, 121px 216px, 240px 286px, 135px 350px);"></div>
+  <img src="img/400.png" class="platform-image drop-zone" data-platform="2" 
+       style="top: 239px; left: 71px; width: 126px; height: 100px; transform: rotateX(-2deg) rotateY(2deg) rotateZ(-2deg);">
+  <div class="platform-text" data-platform="2"
+       style="position:absolute; top: 240px; left: -30px; padding: 5px; transform: rotateZ(-30deg); background-color: white; color: #02923A; border: 1px solid #02923A; font-size:14px;  text-align:center;">
+    Кассовая зона
+  </div>
+
+  <!-- Платформа 3 -->
+  <div class="platform-shadow" data-platform="3" style="clip-path: polygon(184px 345px, 327px 424px, 241px 470px, 105px 389px);"></div>
+  <div class="platform" data-platform="3" style="clip-path: polygon(184px 345px, 327px 424px, 241px 470px, 105px 389px);"></div>
+  <img src="img/500.png" class="platform-image drop-zone" data-platform="3" 
+       style="top: 387px; left: 111px; width: 176px; height: 101px; transform: rotateX(21deg) rotateY(5deg) rotateZ(-1deg);">
+  <div class="platform-text" data-platform="3"
+       style="position:absolute; top: 360px; left: 50px; padding: 5px; background-color: white; transform: rotateZ(-30deg); color: #02923A; border: 1px solid #02923A; font-size:16px; text-align:center;">
+    Входная зона
+  </div>
+
+  <!-- Платформа 4 -->
+  <div class="platform-shadow" data-platform="4" style="clip-path: polygon(150px 88px, 219px 48px, 467px 193px, 399px 233px);"></div>
+  <div class="platform" data-platform="4" style="clip-path: polygon(150px 88px, 219px 48px, 467px 193px, 399px 233px);"></div>
+  <img src="img/200.png" class="platform-image drop-zone" data-platform="4" 
+       style="top: 51px; left: 154px; width: 221px; height: 177px; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+  <div class="platform-text" data-platform="4"
+       style="position:absolute; top: 150px; left: 380px; padding: 5px; background-color: white; transform: rotateX(0deg) rotateY(0deg) rotateZ(30deg);color: #02923A; border: 1px solid #02923A; font-size:16px; text-align:center;">
+    Склад
+  </div>
+
+  <!-- Платформа 5 -->
+  <div class="platform-shadow" data-platform="5" style="clip-path: polygon(154px 208px, 238px 161px, 463px 294px, 411px 329px, 449px 357px, 356px 413px, 210px 332px, 286px 288px);"></div>
+  <div class="platform" data-platform="5" style="clip-path: polygon(154px 208px, 238px 161px, 463px 294px, 411px 329px, 449px 357px, 356px 413px, 210px 332px, 286px 288px);"></div>
+
+  <img src="img/700.png" class="platform-image drop-zone" data-platform="5" 
+       style="top: 168px; left: 155px; width: 241px; height: 161px;">
+  <img src="img/600.png" class="platform-image drop-zone" data-platform="5" 
+       style="top: 275px; left: 227px; width: 192px; height: 149px;">
+  <div class="platform-text" data-platform="5"
+       style="position:absolute; top: 250px; left: 350px; padding: 5px; background-color: white; transform: rotateZ(30deg); color: #02923A; border: 1px solid #02923A; font-size:14px; text-align:center;">
+    Торговый зал
+  </div>
+</div>
+
+
+<div class="bottom-block">
+  <!-- Меню -->
+  <div class="bottom-menu">
+    <div class="menu-left">Технологии:</div>
+    <div class="menu-right">
+      <span>Осталось <strong class="text_i">12</strong></span>
+      <img src="img/20.svg" alt="+">
+    </div>
+  </div>
+
+  <!-- Карточки -->
+  <div class="cards-container">
+    <div class="card" id="0">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/10.svg" alt="" class="card-img">
+      <div class="card-text">Робот-пылесос</div>
+    </div>
+
+    <div class="card" id="1">
+      <div class="card-top">
+        <span class="text_i">3</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/11.svg" alt="" class="card-img">
+      <div class="card-text">Электронные ценники</div>
+    </div>
+
+    <div class="card" id="2">
+      <div class="card-top">
+        <span class="text_i">4</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/12.svg" alt="" class="card-img">
+      <div class="card-text">Кассы само-обслуживания</div>
+    </div>
+
+    <div class="card" id="3">
+      <div class="card-top">
+        <span class="text_i">3</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/13.svg" alt="" class="card-img">
+      <div class="card-text">Зона сборки заказов</div>
+    </div>
+
+    <div class="card" id="4">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/14.svg" alt="" class="card-img">
+      <div class="card-text">Кофейная лаунж-зона</div>
+    </div>
+
+    <div class="card" id="5">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/15.svg" alt="" class="card-img">
+      <div class="card-text">Отдел готовой еды</div>
+    </div>
+
+    <div class="card" id="6">
+      <div class="card-top">
+        <span class="text_i">4</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/16.svg" alt="" class="card-img">
+      <div class="card-text">AI-ассистент</div>
+    </div>
+  </div>
+  <div class="cards-buttons">
+  <button class="btn btn-reset" onclick="Rest()">Сбросить</button>
+<button class="btn btn-complete" id="btn-complete" onclick="ym?.(103834904, 'reachGoal', 'finish')">Завершить</button>
+</div>
+
+</div>
+
+  </div>
+  <!-- Модальное окно -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modal-img" src="" alt="Карточка" class="modal-image">
+        <h2 id="modal-name" style="align-self: flex-start; margin-bottom: 10px;"></h2>
+    <div class="modal-info">
+      <div class="modal-left">
+        <span id="modal-cost">Осталось: 0</span>
+        <img id="modal-cost-img" src="img/20.svg" alt="+">
+      </div>
+      <div class="modal-right" id="modal-right"></div>
+    </div>
+    <!-- Описание -->
+    <div id="modal-description" class="modal-description"></div>
+    <!-- Кнопка добавить -->
+    <button id="modal-add" class="modal-add-btn">Добавить</button>
+  </div>
+</div>
+
+<div class="MMM" id="MMM" style="display: none;">
+  <div class="mmm-content">
+    <p class="mmm-text">
+      Недостаточно ресурсов! <br>
+      Выбери доступную технологию или перераспредели имеющиеся ресурсы.
+    </p>
+    <div class="mmm-buttons">
+      <button class="mmm-close_2">Продолжить</button>
+    </div>
+  </div>
+</div>
+
+<div id="errorModal" class="modal FGH_2" style="display:none;">
+  <div class="modal-content FGH_2">
+    <p id="errorText">К сожалению, эту технологию нельзя использовать здесь. <br><br> <b>Попробуй что-нибудь другое</b></p>
+        <button id="errorOkBtn">Понятно</button>
+
+  </div>
+</div>
+
+<!-- Модальное окно для победы -->
+<div class="TTT" id="TTT" style="display: none;">
+  <div class="ttt-content">
+    <p class="ttt-text"><strong class="i">Поздравляем!</strong> Ты грамотно распределил все ресурсы и сделал магазин по-настоящему технологичным.</p>
+     <p class="ttt-text_2">Кстати, технологии в игре — <br>не фантазия, а реальные решения <br> «Пятёрочки». В магазинах уже внедрены <br> <b class="s">электронные ценники, кассы самообслуживания </b>(которые <br> обрабатывают до 85% покупок), <br> AI-ассистенты для составления графиков  <br>сотрудников и даже роботы на складах.</p>
+     <p class="ttt-text_3">А в первом <b class="s">phygital-супермаркете<br></b> в Москве появился новый формат: <br> покупатель может оформить заказ через <br> терминал, а пока сотрудники собирают <br> корзину — спокойно отдохнуть в уютной <br> лаундж-зоне с кофе. Всё удобно, быстро <br> и технологично.</p>
+<button class="ttt-close" onclick="ym?.(103834904, 'reachGoal', 'win');">Далее</button>
+  </div>
+</div>
+<div class="ZZZ" style="display: none;" >
+  <div class="zzz-content">
+    <p class="text_zzz">Это модальное окно!</p>
+  </div>
+</div>
+<!-- Модальное окно -->
+<div id="myModal" class="modal FGH" style="display: none;">
+  <div class="modal-content FGH">
+        <span class="closeBtn_2">&times;</span>
+    <p>Ты почти собрал идеальную схему, <br> но немного не хватило баллов. <br> <strong class="retry">Попробуй ещё раз</strong> — всё  <br> получится!</p>
+<button id="retryBtn" onclick="ym?.(103834904, 'reachGoal', 'again')">Попробовать ещё раз</button>
+  </div>
+</div>
+
+</div>
+
+<script src="dragManagerGame.js"></script>
+<script type="text/javascript">
+
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103834904', 'ym');
+
+    ym(103834904, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
+
+  function Rest(){
+              window.location.href = "game4.html"; // замените на свой URL
+
+  }
+// Данные карточек
+const cardsData = [
+  { name: "Робот-пылесос", img: "img/40.png", extraImg: "img/robot-extra.png", cost: 2, costImg: "img/20.svg", stats: [{value:5,img:"img/2.svg"},{value:10,img:"img/3.svg"},{value:0,img:"img/4.svg"},{value:0,img:"img/5.svg"}], description:"В «Пятёрочке» уже работают автономные уборщики. Они двигаются по залу и убираются без участия человека. Это чисто, быстро и эффективно!", metric: 'robot_cleaner' },
+  { name: "Электронные ценники", img: "img/41.png", extraImg: "img/robot-extra.png", cost: 3, costImg: "img/20.svg", stats: [{value:0,img:"img/2.svg"},{value:8,img:"img/3.svg"},{value:1,img:"img/4.svg"},{value:12,img:"img/5.svg"}], description:"С такими ценниками цена на полке и в кассе совпадают всегда. А ещё это экологичнее — никаких бумаги и пластика!", metric: 'price_tag' },
+  { name: "Кассы самообслуживания", img: "img/42.png", extraImg: "img/robot-extra.png", cost: 4, costImg: "img/20.svg", stats: [{value:13,img:"img/2.svg"},{value:0,img:"img/3.svg"},{value:2,img:"img/4.svg"},{value:0,img:"img/5.svg"}], description:"Покупатели сами сканируют товары, складывают их в пакет и уходят — это экономит до 30% времени на одну покупку и сокращает очереди.", metric: 'self_service' },
+  { name: "Зона сборки заказов", img: "img/43.png", extraImg: "img/robot-extra.png", cost: 3, costImg: "img/20.svg", stats: [{value:12,img:"img/2.svg"},{value:0,img:"img/3.svg"},{value:4,img:"img/4.svg"},{value:0,img:"img/5.svg"}], description:"Пока ты отдыхаешь, магазин уже собирает заказ! Эта станция позволяет выбрать товары на экране, а сотрудники соберут корзину за 7 минут. Быстро, удобно, современно — как в phygital-магазинах будущего.", metric: 'terminal' },
+  { name: "Кофейная лаунж-зона", img: "img/44.png", extraImg: "img/robot-extra.png", cost: 2, costImg: "img/20.svg", stats: [{value:0,img:"img/2.svg"},{value:7,img:"img/3.svg"},{value:5,img:"img/4.svg"},{value:0,img:"img/5.svg"}], description:"Ты можешь выпить кофе просто так или пока ждёшь, когда соберут твой заказ. Это не просто удобство — это опыт, который остаётся в памяти. А ещё пахнет круассанами.", metric: 'lounge' },
+  { name: "Отдел готовой еды", img: "img/45.png", extraImg: "img/robot-extra.png", cost: 2, costImg: "img/20.svg", stats: [{value:0,img:"img/2.svg"},{value:0,img:"img/3.svg"},{value:12,img:"img/4.svg"},{value:0,img:"img/5.svg"}], description:"Готовая еда в «Пятёрочке»: вкусно, полезно и не нужно стоять у плиты! Наслаждайся сбалансированными блюдами из свежих продуктов. Каждое из них проходит проверку у экспертов Студии Вкуса, прежде чем оказаться на полке. Гарантия качества и идеального вкуса в каждом кусочке!", metric: 'ready_meals' },
+  { name: "AI-ассистент", img: "img/46.png", extraImg: "img/robot-extra.png", cost: 4, costImg: "img/20.svg", stats: [{value:8,img:"img/2.svg"},{value:0,img:"img/3.svg"},{value:8,img:"img/4.svg"},{value:3,img:"img/5.svg"}], description:"Пока ты заботишься о комфорте покупателей, новые технологии помогают сотрудникам справиться с рутиной: умный чат-бот на основе нейросети подскажет любой ответ за секунды, а удобное приложение собрало всё нужное для работы в одном месте. И это не всё! Искусственный интеллект учит новичков и помогает расти тем, кто идёт на повышение. Будущее — уже сегодня в «Пятёрочке»!", metric: 'ai' }
+];
+
+// Данные платформ
+const platformsData = [
+  { id:1, defaultImg:"img/54.png" },
+  { id:2, defaultImg:"img/505.png" },
+  { id:3, defaultImg:"img/53.png" },
+  { id:4, defaultImg:"img/52.png" },
+  { id:5, defaultImg:"img/51.png" },
+  { id:5, defaultImg:"img/55.png" }
+];
+
+// Состояние
+let selectedCard = null;
+let cardToPlace = null;
+const usedCards = new Set();
+let totalCost = 12;
+let totalStats = [0,0,0,0];
+
+// Элементы DOM
+const modal = document.getElementById("modal");
+const modalName = document.getElementById("modal-name");
+const modalImg = document.getElementById("modal-img");
+const modalCost = document.getElementById("modal-cost");
+const modalCostImg = document.getElementById("modal-cost-img");
+const modalRight = document.getElementById("modal-right");
+const modalDescription = document.getElementById("modal-description");
+const modalAdd = document.getElementById("modal-add");
+const closeBtn = document.querySelector(".close");
+const closeBtn_2 = document.querySelector(".closeBtn_2");
+const modal_2 = document.getElementById("myModal");
+const Btn = document.querySelector(".btn-complete");
+const retryBtn = document.getElementById("retryBtn");
+const retryBtn_3 = document.querySelector(".mmm-close_2");
+const promoBtn = document.getElementById("promocode-button");
+const jobBtn = document.getElementById("next-job-button");
+
+retryBtn_3.onclick = ()=>{
+          const modal = document.getElementById("MMM");
+  modal.style.display = "none";
+}
+
+retryBtn.onclick = async ()=>{
+        await ym?.(103834904,'reachGoal','again');
+        window.location.href = "game4.html"; // замените на свой URL
+}
+
+promoBtn.onclick = () => {
+  const modal = document.getElementById("promocode-modal");
+  modal.style.display = "none";
+};
+jobBtn.onclick = () => {
+  const modal = document.getElementById("job-modal");
+  modal.style.display = "none";
+};
+
+modal.style.display = "none";
+
+
+Btn.onclick = async ()=>{
+  const totalCoeff = totalStats.reduce((a, b) => a + b, 0);
+
+  await ym?.(103834904, 'reachGoal', 'finish');
+
+  if (totalCoeff >= 60) {
+    const modal = document.getElementById("TTT");
+    modal.style.display = "flex";
+    const leftBlockText = document.querySelector(".left-block").textContent;
+    const score = leftBlockText.split("/")[0];
+   
+    modal.querySelector(".ttt-close").onclick = async () => {
+      // сохраняем результат
+      localStorage.setItem("finalScore", totalCoeff);
+      localStorage.setItem("finalStats", totalStats.join(','));
+      await ym?.(103834904,'reachGoal','win');
+      window.location.href = "game5.html";
+    };
+  }
+  else{
+      modal_2.style.display = "flex"; // flex, чтобы центрировать
+  }
+}
+
+
+closeBtn_2.addEventListener("click", hideModal);
+function hideModal() {
+  modal_2.style.display = "none";
+}
+// Обновление стоимости
+function updateCost() {
+  document.querySelector(".menu-right .text_i").textContent = totalCost;
+}
+
+// Обновление характеристик
+function updateStatsDisplay() {
+  const statItems = document.querySelectorAll(".right-block .item span");
+  statItems.forEach((span,i)=>span.textContent=totalStats[i]);
+  const total = totalStats.reduce((a,b)=>a+b,0);
+  document.querySelector(".left-block").textContent = `${total}/100`;
+}
+
+// Открытие модалки
+modalAdd.addEventListener("click", () => {
+  if (selectedCard && selectedCard.metric) {
+    if (typeof ym !== "undefined") {
+      ym?.(103834904, 'reachGoal', selectedCard.metric);
+      console.log(`Метрика отправлена: ${selectedCard.metric}`);
+    } else {
+      console.warn("Метрика ym не подключена!");
+    }
+  }
+  // Закрываем модалку
+  modal.style.display = "none";
+});
+
+
+// Закрытие модалки
+closeBtn.onclick = ()=>{
+  modal.style.display="none";
+    // ⚡ сброс карточки технологии (убираем gray)
+  const grayCard = document.querySelector(".cards-container .card.gray");
+  if (grayCard) {
+    grayCard.classList.remove("gray");
+  }
+}
+
+let items = 0;
+
+modalAdd.onclick = () => {
+  if (!selectedCard) return;
+  cardToPlace = selectedCard;
+  usedCards.add(cardToPlace.name);
+
+  modal.style.display = "none";
+
+    // --- Проверка разрешённых зон ---
+    const cardIndex = cardsData.findIndex(c => c.name === cardToPlace.name);
+    if (cardIndex === -1) return;
+
+    const allowedZones = cardPlacementRules[cardIndex] || [];
+    if (!allowedZones.includes(platformId)) {
+      // ❌ показываем модальное окно вместо console.log
+      errorModal.style.display = "flex";
+      return;
+    }
+    // -------------------------------
+
+    // ✅ если зона подходит, идём дальше
+    const images = document.querySelectorAll(`.platform-image[data-platform="${platformId}"]`);
+    const platformImgsData = platformsData.filter(p => p.id === platformId);
+
+    images.forEach((img, index) => {
+      if (platformImgsData[index]) img.src = platformImgsData[index].defaultImg;
+    });
+
+    const platform = document.querySelector(`.platform[data-platform="${platformId}"]`);
+    if (platform) platform.style.backgroundColor = "#FFFFFF";
+    const platformShadow = document.querySelector(`.platform-shadow[data-platform="${platformId}"]`);
+    if (platformShadow) platformShadow.style.backgroundColor = "#C4C4C4";
+
+    // обновляем статистику
+    cardToPlace.stats.forEach((stat, i) => totalStats[i] += stat.value);
+    totalCost -= cardToPlace.cost;
+
+       const textElement = document.querySelector(`.platform-text[data-platform="${platformId}"]`);
+    if (textElement) {
+      textElement.style.color = "#000000"; // например красный при активации
+      textElement.style.borderColor = "#FF0000"; // тоже меняем рамку
+    }
+    // ---------- Проверка на наличие картинки в middle-block ----------
+    if (cardIndex !== -1) {
+      const pos = platformCardPositions[platformId][cardIndex];
+      const imgPath = platformCardImages[cardIndex];
+
+      const middleBlock = document.querySelector(".middle-block");
+      const exists = [...middleBlock.querySelectorAll("img")].some(
+        (img) => img.src.includes(imgPath)
+      );
+
+      setTimeout(() => {
+          if (items === 0) {
+            document.getElementById("promocode-modal").style.display = "flex";
+          }
+
+          if (items === 3) {
+            document.getElementById("job-modal").style.display = "flex";
+          }
+
+
+          items++;
+        }, 2000);
+
+      if (exists) {
+        document.querySelector(".ZZZ").style.display = "none";
+      } else {
+        const cardTexts = [
+          "В «Пятёрочке» уже работают автономные уборщики...",
+          "С такими ценниками цена на полке и в кассе совпадают всегда...",
+          "Покупатели сами сканируют товары...",
+          "Пока ты отдыхаешь, магазин уже собирает заказ...",
+          "Ты можешь выпить кофе просто так...",
+          "Готовая еда в «Пятёрочке»: вкусно, полезно...",
+          "Пока ты заботишься о комфорте покупателей..."
+        ];
+        document.querySelector(".text_zzz").textContent = cardTexts[cardIndex];
+        document.querySelector(".ZZZ").style.display = "flex";
+        setTimeout(() => {
+          document.querySelector(".ZZZ").style.display = "none";
+        }, 2000);
+
+        const newImgPlatform = document.createElement("img");
+        newImgPlatform.src = imgPath;
+        newImgPlatform.className = "p";
+        newImgPlatform.style.position = "absolute";
+        newImgPlatform.style.zIndex = 999;
+        newImgPlatform.style.left = pos.left + "px";
+        newImgPlatform.style.top = pos.top + "px";
+        newImgPlatform.style.width = pos.width + "px";
+        newImgPlatform.style.height = pos.height + "px";
+        platform.parentElement.appendChild(newImgPlatform);
+      }
+    }
+    // -----------------------------------------------------------------
+
+    // 🔥 Подсветка выбранной карточки
+    const allCards = document.querySelectorAll(".cards-container .card");
+    const cardIndex2 = cardsData.findIndex(c => c.name === selectedCard.name);
+    if (allCards[cardIndex2]) {
+      const currentCard = allCards[cardIndex2];
+      currentCard.classList.add("highlight");
+      currentCard.classList.remove("gray");
+
+      setTimeout(() => {
+        currentCard.classList.remove("highlight");
+      }, 10000);
+    }
+
+    usedCards.add(cardToPlace.name);
+    cardToPlace = null;
+
+
+    updateCost();
+    updateStatsDisplay();
+};
+
+
+// Пути картинок карточек
+const platformCardImages = [
+  "img/10.png", // Карточка 1
+  "img/4242.png", // Карточка 2
+  "img/1212.png", // Карточка 3
+  "img/13.png", // Карточка 4
+  "img/3232.png", // Карточка 5
+  "img/0.png", // Карточка 6
+  "img/16.png"  // Карточка 7
+];
+
+// Позиции карточек на каждой платформе
+// 5 платформ × 7 карточек = 35 позиций
+const platformCardPositions = {
+  1: [ // Платформа 1
+    { left: 90, top: 180, width: 30, height: 30 },
+    { left: 140, top: 130, width: 50, height: 50 },
+    { left: 40, top: 130, width: 80, height: 80 },
+    { left: 120, top: 160, width: 30, height: 30 },
+    { left: 40, top: 150, width: 50, height: 50 },
+    { left: 70, top: 180, width: 50, height: 50 },
+    { left: 70, top: 160, width: 30, height: 30 }
+  ],
+2: [
+  { left: 90, top: 310, width: 30, height: 30 },
+  { left: 120, top: 230, width: 50, height: 50 },
+  { left: 30, top: 260, width: 100, height: 100 },
+  { left: 100, top: 330, width: 30, height: 30 },
+  { left: 10, top: 250, width: 50, height: 50 },
+  { left: 20, top: 250, width: 50, height: 50 },
+  { left: 80, top: 260, width: 30, height: 30 }
+],
+
+3: [
+  { left: 220, top: 420, width: 30, height: 30 },
+  { left: 160, top: 350, width: 50, height: 50 },
+  { left: 160, top: 360, width: 80, height: 80 },
+  { left: 190, top: 400, width: 30, height: 30 },
+  { left: 200, top: 400, width: 50, height: 50 },
+  { left: 140, top: 350, width: 50, height: 50 },
+  { left: 180, top: 370, width: 30, height: 30 }
+],
+4: [
+  { left: 260, top: 140, width: 30, height: 30 },
+  { left: 230, top: 140, width: 50, height: 50 },
+  { left: 340, top: 140, width: 80, height: 80 },
+  { left: 160, top: 100, width: 30, height: 30 },
+  { left: 250, top: 90, width: 50, height: 50 },
+  { left: 360, top: 190, width: 50, height: 50 },
+  { left: 250, top: 140, width: 30, height: 30 }
+],
+5: [
+  { left: 320, top: 320, width: 30, height: 30 },
+  { left: 320, top: 280, width: 50, height: 50 },
+  { left: 300, top: 320, width: 80, height: 80 },
+  { left: 260, top: 320, width: 30, height: 30 },
+  { left: 280, top: 360, width: 50, height: 50 },
+  { left: 255, top: 277, width: 60, height: 60 },
+  { left: 290, top: 260, width: 30, height: 30 }
+],
+};// --- Правила зон для каждой карточки ---
+const cardPlacementRules = {
+  0: [1, 2, 3, 4, 5], // первая может везде
+  1: [5],             // вторая только зона 5
+  2: [2],             // третья только зона 2
+  3: [1],             // четвертая только зона 1
+  4: [1],             // пятая только зона 1
+  5: [5],             // шестая только зона 5
+  6: [4],             // седьмая только зона 4
+};
+
+// --- Модальное окно ошибки ---
+const errorModal = document.getElementById("errorModal");
+const errorText = document.getElementById("errorText");
+const errorOkBtn = document.getElementById("errorOkBtn");
+
+errorOkBtn.addEventListener("click", () => {
+  errorModal.style.display = "none";
+
+  // ⚡ сброс карточки технологии (убираем gray)
+  const grayCard = document.querySelector(".cards-container .card.gray");
+  if (grayCard) {
+    grayCard.classList.remove("gray");
+  }
+
+  // ⚡ сбрасываем cardToPlace
+  cardToPlace = null;
+});
+
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/103834904" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>

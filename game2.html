@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Все платформы с настраиваемыми изображениями</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  @font-face {
+  font-family: "MyFont";
+  src: url("fonts/5kaSansDesign-Regular.otf") format("woff2"),
+       url("fonts/5kaSansDesign-Black.otf") format("woff");
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "MyFont", sans-serif;
+        overflow-y: hidden; /* запрет вертикального */
+  overflow-x: hidden;
+
+}
+#v{
+  text-align: center;
+}
+.main-block {
+     display: flex; 
+     flex-direction: column;
+      height: 100vh; 
+        background-color: rgba(221, 221, 221, 0.2);
+
+}
+.top-block {
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Раздвигаем блоки по краям */
+    padding: 0 20px; /* Отступы от краев экрана */
+    box-sizing: border-box;
+    z-index: 9999;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Дополнительно гарантируем распределение */
+}
+
+.left-block { 
+box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 15px; 
+    padding: 5px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    color: #333; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-width: 100px; 
+    background-color: rgba(255, 255, 255, 0.8);
+} 
+.right-block { 
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 15px; 
+    padding: 5px; 
+    display: flex; 
+    background-color: rgba(255, 255, 255, 0.8);
+ } 
+.item {
+    padding: 5px 5px; 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 14px; 
+    color: #555; 
+    background-color: rgba(249, 249, 249, 0.8); 
+} 
+.item img { 
+    width: 18px; 
+    height: 18px; 
+}
+.content-wrapper {
+  flex: 1 1 auto;  /* гибкий контейнер */
+  display: flex;
+  flex-direction: column;
+}
+
+.middle-block {
+  position: relative;
+  flex: none;
+  width: 100%;
+  
+  aspect-ratio: 12/7; /* или другое подходящее */
+  margin: 0 auto;
+}
+.bottom-block {
+  position: relative;
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 5px;
+}
+
+/* Платформы */
+.platform, .platform-shadow {
+  position: absolute;
+  right: 20px;
+  width: 100%;
+  height: 100%;
+  filter: blur(2px);
+}
+.platform {
+  background-color: #6FC882;
+}
+
+.platform-text {
+  z-index: 1;
+  filter: blur(2px);
+}
+
+.platform-shadow {
+  background-color: #02923A;
+  transform: translateY(10px);
+  z-index: -1;
+}
+
+/* Изображения на платформах */
+.platform-image {
+  position: absolute;
+  transform-origin: top left;
+  z-index: 1;
+  cursor: pointer;
+  filter: blur(2px);
+}
+
+/* Меню */
+.bottom-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.bottom-menu .menu-left {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.bottom-menu .menu-right {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid #ffffff;
+  background-color: white;
+  padding: 7px 8px;
+  border-radius: 10px;
+  
+}
+
+.bottom-menu .menu-right img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Контейнер карточек */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Каждая карточка */
+.card {
+          filter: blur(2px);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: calc(21% - 10px); /* 4 карточки в ряд */
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Каждая карточка */
+.card_2 {
+  position: absolute;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: calc(21% - 10px); /* 4 карточки в ряд */
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Верхняя цифра и плюс */
+.card-top {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 10px;
+
+}
+
+.card-top img {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* Карточка */
+.card-img {
+  margin-top: 25px; /* сдвигаем ниже card-top */
+  width: 40px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Блок кнопок под карточками */
+.cards-buttons {
+  display: flex;
+  flex-direction: row; /* горизонтально */
+  gap: 10px; /* промежуток между кнопками */
+  margin-top: 15px;
+  justify-content: center; /* выравнивание по центру */
+  width: 100%;
+            filter: blur(2px);
+}
+
+.cards-buttons .btn {
+  flex: 0 0 45%; /* каждая кнопка занимает примерно 45% ширины контейнера */
+  padding: 16px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.cards-buttons .btn-reset {
+  background-color: #D9D9D9;
+  color: #474646;
+  border: 1px solid #474646;
+}
+
+.cards-buttons .btn-complete {
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+}
+
+
+/* Текст под картинкой */
+.card-text {
+  margin-top: 5px;
+  text-align: center;
+  font-size: 12px;
+}
+.text_i{
+    color: #02923A;
+}
+
+
+@media screen and (max-width: 430px)  {
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 30px;
+    width: 100%;
+        bottom: 160px;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 450px)  {
+        img[data-platform="1"] {
+    top: 120px !important;
+  }
+  img[data-platform="2"] {
+    top: 250px !important;
+  }
+  img[data-platform="3"] {
+    top: 400px !important;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 30px;
+    width: 100%;
+        bottom: 160px;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 414px) {
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 30px;
+    width: 100%;
+        bottom: 160px;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+
+
+@media screen and (max-width: 390px){
+      img[data-platform="1"] {
+    top: 120px !important;
+  }
+  img[data-platform="2"] {
+    top: 260px !important;
+  }
+  img[data-platform="3"] {
+    top: 410px !important;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+  }
+  .platform-shadow{
+    filter: blur(2px);
+    /* z-index: -1; */
+  } 
+  .platform{
+    filter: blur(2px);
+    z-index: 1;
+  }
+  .platform-text {
+    filter: blur(2px);
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 40px;
+    width: 100%;
+        bottom: 160px;
+        right: 5%;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(20.4% - 6px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+
+
+@media screen and (max-width: 375px){
+      img[data-platform="1"] {
+    top: 120px !important;
+  }
+  img[data-platform="2"] {
+    top: 260px !important;
+  }
+  img[data-platform="3"] {
+    top: 410px !important;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 40px;
+    width: 100%;
+        bottom: 160px;
+        right: 5%;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(21.0% - 6px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 384px){
+  img[data-platform="1"] {
+    top: 120px !important;
+  }
+  img[data-platform="2"] {
+    top: 260px !important;
+  }
+  img[data-platform="3"] {
+    top: 410px !important;
+  }
+  img[data-platform="4"] {
+    top: 70px !important;
+  }
+  img[src="img/700.png"] {
+    top: 180px !important;
+  }
+  img[src="img/600.png"] {
+    top: 290px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 140px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 260px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 370px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 170px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 270px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 40px;
+    width: 100%;
+        bottom: 160px;
+        right: 5%;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(20.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-width: 360px) {
+      img[data-platform="1"] {
+    top: 140px !important;
+  }
+  img[data-platform="2"] {
+    top: 280px !important;
+  }
+  img[data-platform="3"] {
+    top: 430px !important;
+  }
+  img[data-platform="4"] {
+    top: 90px !important;
+  }
+  img[src="img/700.png"] {
+    top: 200px !important;
+  }
+  img[src="img/600.png"] {
+    top: 310px !important;
+  }
+  .platform-text[data-platform="1"] {
+    top: 160px !important;
+  }
+  .platform-text[data-platform="2"] {
+    top: 280px !important;
+  }
+  .platform-text[data-platform="3"] {
+    top: 390px !important;
+  }
+  .platform-text[data-platform="4"] {
+    top: 190px !important;
+  }
+  .platform-text[data-platform="5"] {
+    top: 290px !important;
+  }
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 60px;
+    width: 100%;
+        bottom: 160px;
+        right: 10%;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(21.0% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+
+/* Контейнер модального окна (фон) */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* позиционируем снизу */
+  padding-bottom: 20px; 
+  box-sizing: border-box;
+}
+
+/* Контент модального окна */
+.modal-content {
+  background-color: #fefefe;
+  width: 90%; 
+  max-width: 600px;
+  height: 70vh; 
+  border-radius: 15px 15px 0 0; 
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: -30px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 40%;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.modal-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.modal-left {
+  border:1px solid #02923A;
+  display: flex;
+  padding: 5px;
+  border-radius: 10px;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-right {
+  border:1px solid #02923A;
+  display: flex;
+  padding: 5px;
+  border-radius: 10px;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-description {
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 16px;
+  overflow-y: auto;
+  flex: 1;
+  width: 100%;
+}
+
+.modal-add-btn {
+  padding: 20px 130px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+#r{
+    background-color: #FFFFFF;
+}
+.p{
+  z-index: 999;
+}
+@keyframes cardHighlight {
+  0%   { box-shadow: 0 0 0px 0 #02923A; }
+  50%  { box-shadow: 0 0 20px 10px #02923A}
+  100% { box-shadow: 0 0 0px 0 #02923A }
+}
+
+.highlight {
+  border-radius: 12px;
+  background-color: #DEFFCB;
+    border: 2px solid #4CAF50; /* зелёная рамка */
+
+}
+.g {
+    
+  border-radius: 15px;
+  width: 75%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;      /* поверх всего */
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  color: #333333;
+  padding: 5px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  z-index: 1000;
+}
+#myBtn{
+  padding: 20px 100px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.model_mini_chanter {
+  position: fixed;
+  top: 40px;
+  left: 0px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal_content {
+  background: white;
+  border-radius: 10px;
+  min-width: 300px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+.rrr{
+  color: #4CAF50;
+  padding: 5px 10px;
+}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103834904', 'ym');
+
+    ym(103834904, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/103834904" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+
+<div class="main-block"> <!-- Верхний блок -->
+     <div class="top-block"> 
+        <div class="container">
+             <div class="left-block">0/100</div> 
+             <div class="right-block"> 
+                <div class="item" ><span id="f1">0</span><img src="img/2.svg" alt="+"></div> 
+                <div class="item"><span>0</span><img src="img/3.svg" alt="+"></div>
+                <div class="item"><span id="f2">0</span><img src="img/4.svg" alt="+"></div>
+                <div class="item"><span>0</span><img src="img/5.svg" alt="+"></div>
+            </div>
+        </div>
+    </div>
+
+  <div class="content-wrapper">
+      <div class="middle-block">
+
+      <!-- Платформа 1 -->
+      <div class="platform-shadow" data-platform="1" style="clip-path: polygon(12px 166px, 128px 98px, 209px 145px, 94px 214px);"></div>
+      <div class="platform" data-platform="1" style="clip-path: polygon(12px 166px, 128px 98px, 209px 145px, 94px 214px);">
+
+      </div>
+      <img src="img/300.png" class="platform-image" data-platform="1" style="top: 101px; left: 16px; width: 144px; height: 133px; transform: rotateX(-27deg) rotateY(0deg) rotateZ(0deg);">
+        <div class="platform-text" data-platform="1"
+       style="position:absolute; top: 120px; left: -40px; padding: 5px; transform: rotateZ(-30deg); background-color: white; color: #02923A; border: 1px solid #02923A; font-size:14px; text-align:center;">
+    Зона ожидания заказа
+  </div>
+      <!-- Платформа 2 -->
+      <div class="platform-shadow" data-platform="2" style="z-index: 3; clip-path: polygon(11px 276px, 121px 216px, 240px 286px, 135px 350px); filter: none;"></div>
+      <div class="platform"  data-platform="2" id="f" style="z-index: 3;clip-path: polygon(11px 276px, 121px 216px, 240px 286px, 135px 350px); filter: none; background-color: #FFFFFF;"></div>
+      <img src="img/1000.png" id="ww" class="platform-image drop-zone" id="dropZone" data-platform="2" style="z-index: 3;filter: none; top: 239px; left: 71px; width: 126px; height: 100px; transform: rotateX(-2deg) rotateY(2deg) rotateZ(-2deg);">
+  <div class="platform-text" data-platform="2" id="Rar"
+       style="z-index: 3;filter: none;position:absolute; top: 240px; left: -30px; padding: 5px; transform: rotateZ(-30deg); background-color: white; color: #000000; border: 1px solid #FF0000; font-size:14px;  text-align:center;">
+    Кассовая зона
+  </div>
+      <!-- Платформа 3 -->
+      <div class="platform-shadow" data-platform="3" style="clip-path: polygon(184px 345px, 327px 424px, 241px 470px, 105px 389px);"></div>
+      <div class="platform" data-platform="3" style="clip-path: polygon(184px 345px, 327px 424px, 241px 470px, 105px 389px);"></div>
+      <img src="img/500.png" class="platform-image" data-platform="3" style="top: 387px; left: 111px; width: 176px; height: 101px; transform: rotateX(21deg) rotateY(5deg) rotateZ(-1deg);">
+  <div class="platform-text" data-platform="3"
+       style="position:absolute; top: 360px; left: 50px; padding: 5px; background-color: white; transform: rotateZ(-30deg); color: #02923A; border: 1px solid #02923A; font-size:16px; text-align:center;">
+    Входная зона
+  </div>
+      <!-- Платформа 4 -->
+      <div class="platform-shadow" data-platform="4" style="clip-path: polygon(150px 88px, 219px 48px, 467px 193px, 399px 233px);"></div>
+      <div class="platform" data-platform="4" style="clip-path: polygon(150px 88px, 219px 48px, 467px 193px, 399px 233px);"></div>
+      <img src="img/200.png" class="platform-image" data-platform="4" style="top: 51px; left: 154px; width: 221px; height: 177px; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+  <div class="platform-text" data-platform="4"
+       style="position:absolute; top: 150px; left: 380px; padding: 5px; background-color: white; transform: rotateX(0deg) rotateY(0deg) rotateZ(30deg);color: #02923A; border: 1px solid #02923A; font-size:16px; text-align:center;">
+    Склад
+  </div>
+      <!-- Платформа 5 -->
+<!-- Платформа 5 -->
+<div class="platform-shadow" data-platform="5" style="clip-path: polygon(154px 208px, 238px 161px, 463px 294px, 411px 329px, 449px 357px, 356px 413px, 210px 332px, 286px 288px);"></div>
+<div class="platform" data-platform="5" style="clip-path: polygon(154px 208px, 238px 161px, 463px 294px, 411px 329px, 449px 357px, 356px 413px, 210px 332px, 286px 288px);"></div>
+
+<!-- Первое изображение на платформе 5 -->
+<img src="img/700.png" class="platform-image" data-platform="5" style="top: 168px; left: 155px; width: 241px; height: 161px; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+
+<!-- Второе изображение на платформе 5 -->
+<img src="img/600.png" class="platform-image" data-platform="5" style="top: 275px; left: 227px; width: 192px; height: 149px; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+  <div class="platform-text" data-platform="5"
+       style="position:absolute; top: 250px; left: 350px; padding: 5px; background-color: white; transform: rotateZ(30deg); color: #02923A; border: 1px solid #02923A; font-size:14px; text-align:center;">
+    Торговый зал
+  </div>
+    </div>
+
+<div class="bottom-block">
+  <!-- Меню -->
+  <div class="bottom-menu">
+    <div class="menu-left">Технологии:</div>
+    <div class="menu-right">
+      <span>Осталось <strong class="text_i">12</strong></span>
+      <img src="img/20.svg" alt="+">
+    </div>
+  </div>
+
+  <!-- Карточки -->
+  <div class="cards-container">
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.png" alt="+">
+      </div>
+      <img src="img/10.png" alt="" class="card-img">
+      <div class="card-text">Робот-пылесос</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">3</span>
+        <img src="img/20.png" alt="+">
+      </div>
+      <img src="img/11.png" alt="" class="card-img">
+      <div class="card-text">Электронные ценники</div>
+    </div>
+
+    <div class="card_2"  >
+      <div class="card-top">
+        <span class="text_i">4</span>
+        <img src="img/20.svg"  alt="+">
+      </div>
+      <img src="img/12.svg" alt="" class="card-img">
+      <div class="card-text">Кассы само-обслуживания</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">3</span>
+        <img src="img/20.png" alt="+">
+      </div>
+      <img src="img/13.png" alt="" class="card-img">
+      <div class="card-text">Зона сборки заказов</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.png" alt="+">
+      </div>
+      <img src="img/14.png" alt="" class="card-img">
+      <div class="card-text">Кофейная лаунж-зона</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.png" alt="+">
+      </div>
+      <img src="img/15.png" alt="" class="card-img">
+      <div class="card-text">Отдел готовой еды</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">4</span>
+        <img src="img/20.png" alt="+">
+      </div>
+      <img src="img/16.png" alt="" class="card-img">
+      <div class="card-text">AI-ассистент</div>
+    </div>
+  </div>
+  <div class="cards-buttons">
+  <button class="btn btn-reset">Сбросить</button>
+  <button class="btn btn-complete">Завершить</button>
+</div>
+
+</div>
+<div class="model_mini_chanter">
+  <div class="modal_content">
+    <p id="e">Перетащи технологию в зону</p>
+  </div>
+</div>
+
+  </div>
+<div class="g" style="display: none;">
+    <p id="v"><b>Теперь твой ход — </b><br> выбирай технологии и расставляй <br> их по зонам. Но помни: ресурсы  <br>ограничены — их всего 12. Технологии <br> требуют <b> разное количество <br> ресурсов </b> для установки и улучшают <br> <b> разные параметры магазина. </b><br> После того, как расставишь их, <br> поменять не получится, поэтому <br> выбирай с умом!</p>
+    <button id="myBtn" style="display: none;" onclick="ym?.(103834904,'reachGoal','rules'); alert('Туториал пройден!')">Понятно</button>
+</div>
+<!-- Модальное окно GHJ -->
+<div class="GHJ" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+">
+  <div style="
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  ">
+    <p style="font-size: 16px; color: #333;">
+      После того, как ты воспользуешься технологией, ей нужно восстановиться. Чтобы не терять времени, ты можешь пока использовать другие!
+    </p>
+    <button style="
+  padding: 20px 120px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+    ">Понятно</button>
+  </div>
+</div>
+
+
+</div>
+
+<script src="dragManager.js"></script>
+<script>
+// Данные карточек
+const cardsData = [
+  { name: "Робот-пылесос", img: "img/40.png", extraImg: "img/robot-extra.png", cost: 2, costImg: "img/20.png", stats: [{value:4,img:"img/31.png"},{value:4,img:"img/32.png"},{value:4,img:"img/33.png"},{value:4,img:"img/34.png"}], description:"В «Пятёрочке» уже работают автономные уборщики. Они двигаются по залу и убираются без участия человека. Это чисто, быстро и эффективно!" },
+  { name: "Электронные ценники", img: "img/41.png", extraImg: "img/robot-extra.png", cost: 3, costImg: "img/20.png", stats: [{value:3,img:"img/31.png"},{value:4,img:"img/32.png"},{value:2,img:"img/33.png"},{value:5,img:"img/34.png"}], description:"С такими ценниками цена на полке и в кассе совпадают всегда. А ещё это экологичнее — никаких бумаги и пластика!" },
+  { name: "Кассы само-обслуживания", img: "img/42.png", extraImg: "img/robot-extra.png", cost: 4, costImg: "img/20.png", stats: [{value:4,img:"img/31.png"},{value:4,img:"img/32.png"},{value:4,img:"img/33.png"},{value:4,img:"img/34.png"}], description:"Покупатели сами сканируют товары, складывают их в пакет и уходят — это экономит до 30% времени на одну покупку и сокращает очереди." },
+  { name: "Зона сборки заказов", img: "img/43.png", extraImg: "img/robot-extra.png", cost: 3, costImg: "img/20.png", stats: [{value:3,img:"img/31.png"},{value:3,img:"img/32.png"},{value:4,img:"img/33.png"},{value:4,img:"img/34.png"}], description:"Пока ты отдыхаешь, магазин уже собирает заказ! Эта станция позволяет выбрать товары на экране, а сотрудники соберут корзину за 7 минут. Быстро, удобно, современно — как в phygital-магазинах будущего." },
+  { name: "Кофейная лаунж-зона", img: "img/44.png", extraImg: "img/robot-extra.png", cost: 2, costImg: "img/20.png", stats: [{value:2,img:"img/31.png"},{value:2,img:"img/32.png"},{value:2,img:"img/33.png"},{value:2,img:"img/34.png"}], description:"Ты можешь выпить кофе просто так или пока ждёшь, когда соберут твой заказ. Это не просто удобство — это опыт, который остаётся в памяти. А ещё пахнет круассанами." },
+  { name: "Отдел готовой еды", img: "img/45.png", extraImg: "img/robot-extra.png", cost: 2, costImg: "img/20.png", stats: [{value:2,img:"img/31.png"},{value:2,img:"img/32.png"},{value:2,img:"img/33.png"},{value:2,img:"img/34.png"}], description:"Готовая еда в «Пятёрочке»: вкусно, полезно и не нужно стоять у плиты! Наслаждайся сбалансированными блюдами из свежих продуктов. Каждое из них проходит проверку у экспертов Студии Вкуса, прежде чем оказаться на полке. Гарантия качества и идеального вкуса в каждом кусочке!" },
+  { name: "AI-ассистент", img: "img/46.png", extraImg: "img/robot-extra.png", cost: 4, costImg: "img/20.png", stats: [{value:4,img:"img/31.png"},{value:4,img:"img/32.png"},{value:4,img:"img/33.png"},{value:4,img:"img/34.png"}], description:"Пока ты заботишься о комфорте покупателей, новые технологии помогают сотрудникам справиться с рутиной: умный чат-бот на основе нейросети подскажет любой ответ за секунды, а удобное приложение собрало всё нужное для работы в одном месте. И это не всё! Искусственный интеллект учит новичков и помогает расти тем, кто идёт на повышение. Будущее — уже сегодня в «Пятёрочке»!" }
+];
+
+// Данные платформ
+const platformsData = [
+  { id:1, defaultImg:"img/54.png" },
+  { id:2, defaultImg:"img/1000.png" },
+  { id:3, defaultImg:"img/53.png" },
+  { id:4, defaultImg:"img/52.png" },
+  { id:5, defaultImg:"img/51.png" },
+  { id:5, defaultImg:"img/55.png" }
+];
+window.platformsData = platformsData;
+// Состояние
+let selectedCard = null;
+let cardToPlace = null;
+const usedCards = new Set();
+let totalCost = 12;
+let totalStats = [0,0,0,0];
+
+// Элементы DOM
+const modal = document.getElementById("modal");
+const modalName = document.getElementById("modal-name");
+const modalImg = document.getElementById("modal-img");
+const modalCost = document.getElementById("modal-cost");
+const modalCostImg = document.getElementById("modal-cost-img");
+const modalRight = document.getElementById("modal-right");
+const modalDescription = document.getElementById("modal-description");
+const modalAdd = document.getElementById("modal-add");
+const closeBtn = document.querySelector(".close");
+
+
+// Обновление характеристик
+function updateStatsDisplay() {
+  const statItems = document.querySelectorAll(".right-block .item span");
+  statItems.forEach((span,i)=>span.textContent=totalStats[i]);
+  const total = totalStats.reduce((a,b)=>a+b,0);
+  document.querySelector(".left-block").textContent = `${total}/100`;
+}
+
+// Открытие модалки
+card = document.querySelector(".card_2")
+let index = 2;
+
+document.querySelectorAll(".cards-container .card_2")
+  .forEach((cardEl, index) => {
+    cardEl.setAttribute('draggable', 'true');
+    cardEl.addEventListener("touchstart", () => {
+      document.querySelectorAll(".cards-container .card, .cards-container .card_2")
+        .forEach(c => c.classList.remove("highlight"));
+      cardEl.classList.add("highlight");
+    });
+  });
+
+
+// Пути картинок карточек
+const platformCardImages = [
+  "img/1212.png", // Карточка 1
+  "img/11.png", // Карточка 2
+  "img/12.png", // Карточка 3
+  "img/13.png", // Карточка 4
+  "img/14.png", // Карточка 5
+  "img/15.png", // Карточка 6
+  "img/16.png"  // Карточка 7
+];
+
+// Позиции карточек на каждой платформе
+// 5 платформ × 7 карточек = 35 позиций
+const platformCardPositions = {
+  1: [ // Платформа 1
+    { left: 100, top: 160, width: 30, height: 30 },
+    { left: 130, top: 100, width: 30, height: 30 },
+    { left: 170, top: 100, width: 30, height: 30 },
+    { left: 90, top: 140, width: 30, height: 30 },
+    { left: 130, top: 140, width: 30, height: 30 },
+    { left: 170, top: 140, width: 30, height: 30 },
+    { left: 110, top: 180, width: 30, height: 30 }
+  ],
+2: [
+  { left: 40, top: 250, width: 100, height: 100 },
+],
+
+3: [
+  { left: 240, top: 380, width: 30, height: 30 },
+  { left: 160, top: 220, width: 30, height: 30 },
+  { left: 200, top: 220, width: 30, height: 30 },
+  { left: 120, top: 260, width: 30, height: 30 },
+  { left: 160, top: 260, width: 30, height: 30 },
+  { left: 200, top: 260, width: 30, height: 30 },
+  { left: 140, top: 300, width: 30, height: 30 }
+],
+4: [
+  { left: 260, top: 100, width: 30, height: 30 },
+  { left: 160, top: 220, width: 30, height: 30 },
+  { left: 200, top: 220, width: 30, height: 30 },
+  { left: 120, top: 260, width: 30, height: 30 },
+  { left: 160, top: 260, width: 30, height: 30 },
+  { left: 200, top: 260, width: 30, height: 30 },
+  { left: 140, top: 300, width: 30, height: 30 }
+],
+5: [
+  { left: 320, top: 320, width: 30, height: 30 },
+  { left: 160, top: 220, width: 30, height: 30 },
+  { left: 200, top: 220, width: 30, height: 30 },
+  { left: 120, top: 260, width: 30, height: 30 },
+  { left: 160, top: 260, width: 30, height: 30 },
+  { left: 200, top: 260, width: 30, height: 30 },
+  { left: 140, top: 300, width: 30, height: 30 }
+],
+};
+</script>
+
+
+
+</body>
+</html>

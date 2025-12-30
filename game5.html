@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Все платформы с настраиваемыми изображениями</title>
+<style>
+      @font-face {
+  font-family: "MyFont";
+  src: url("fonts/5kaSansDesign-Regular.otf") format("woff2"),
+       url("fonts/5kaSansDesign-Black.otf") format("woff");
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "MyFont", sans-serif;
+        overflow-y: hidden; /* запрет вертикального */
+  overflow-x: hidden;
+}
+.main-block {
+     display: flex; 
+     flex-direction: column;
+      height: 100vh; 
+        background-color: rgba(221, 221, 221, 0.2);
+
+}
+.top-block {
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Раздвигаем блоки по краям */
+    padding: 0 20px; /* Отступы от краев экрана */
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Дополнительно гарантируем распределение */
+}
+
+.left-block { 
+box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 15px; 
+    padding: 5px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    color: #333; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-width: 100px; 
+    background-color: rgba(255, 255, 255, 0.8);
+} 
+.right-block { 
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 15px; 
+    padding: 5px; 
+    display: flex; 
+    background-color: rgba(255, 255, 255, 0.8);
+ } 
+.item {
+    padding: 5px 5px; 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 14px; 
+    color: #555; 
+    background-color: rgba(249, 249, 249, 0.8); 
+} 
+.item img { 
+    width: 18px; 
+    height: 18px; 
+}
+.content-wrapper {
+  flex: 1 1 auto;  /* гибкий контейнер */
+  display: flex;
+  flex-direction: column;
+}
+
+.middle-block {
+  position: relative;
+  flex: none;
+  width: 100%;
+  
+  aspect-ratio: 12/7; /* или другое подходящее */
+  margin: 0 auto;
+}
+
+.bottom-block {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 5px;
+}
+
+/* Платформы */
+.platform, .platform-shadow {
+  position: absolute;
+  right: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.platform {
+  background-color: #6FC882;
+}
+
+.platform-shadow {
+  background-color: #02923A;
+  transform: translateY(10px);
+  z-index: -1;
+}
+
+/* Изображения на платформах */
+.platform-image {
+  position: absolute;
+  transform-origin: top left;
+  z-index: 1;
+  cursor: pointer;
+}
+
+/* Меню */
+.bottom-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.bottom-menu .menu-left {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.bottom-menu .menu-right {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid #ffffff;
+  background-color: white;
+  padding: 7px 8px;
+  border-radius: 10px;
+}
+
+.bottom-menu .menu-right img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Контейнер карточек */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Каждая карточка */
+.card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: calc(21% - 10px); /* 4 карточки в ряд */
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Верхняя цифра и плюс */
+.card-top {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 10px;
+
+}
+
+.card-top img {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* Карточка */
+.card-img {
+  margin-top: 25px; /* сдвигаем ниже card-top */
+  width: 40px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Блок кнопок под карточками */
+.cards-buttons {
+  display: flex;
+  flex-direction: row; /* горизонтально */
+  gap: 10px; /* промежуток между кнопками */
+  margin-top: 15px;
+  justify-content: center; /* выравнивание по центру */
+  width: 100%;
+}
+
+.cards-buttons .btn {
+  flex: 0 0 45%; /* каждая кнопка занимает примерно 45% ширины контейнера */
+  padding: 16px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.cards-buttons .btn-reset {
+  background-color: #D9D9D9;
+  color: #474646;
+  border: 1px solid #474646;
+}
+
+.cards-buttons .btn-complete {
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+}
+
+
+/* Текст под картинкой */
+.card-text {
+  margin-top: 5px;
+  text-align: center;
+  font-size: 14px;
+}
+.text_i{
+    color: #02923A;
+}
+
+
+@media screen and (max-width: 440px) {
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.9); /* уменьшаем всю сцену */
+padding: 20px;
+    width: 100%;
+    
+  }
+
+  .card {
+    width: calc(21.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+}
+@media screen and (max-height: 730px) {
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.8); /* уменьшаем всю сцену */
+padding: 20px;
+    width: 100%;
+    bottom: 100px;
+  }
+.bottom-block{
+bottom: 190px;
+}
+  .card {
+    width: calc(21.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+@media screen and (max-height: 620px) {
+  .middle-block {
+    aspect-ratio: 3.8 / 4; /* сделаем более квадратной, чтобы влезло */
+    transform: scale(0.6); /* уменьшаем всю сцену */
+padding: 20px;
+    width: 100%;
+    bottom: 130px;
+  }
+.bottom-block{
+bottom: 280px;
+}
+  .card {
+    width: calc(21.9% - 8px);
+    padding: 6px;
+  }
+
+  .card-img {
+    width: 28px;
+  }
+
+  .cards-buttons {
+    margin-top: 20px;
+  }
+
+}
+/* Контейнер модального окна (фон) */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* позиционируем снизу */
+  padding-bottom: 20px; 
+  box-sizing: border-box;
+}
+
+/* Контент модального окна */
+.modal-content {
+  background-color: #fefefe;
+  width: 90%; 
+  max-width: 600px;
+  height: 70vh; 
+  border-radius: 15px 15px 0 0; 
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: -30px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 40%;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.modal-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.modal-left {
+  border:1px solid #02923A;
+  display: flex;
+  padding: 5px;
+  border-radius: 10px;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-right {
+  border:1px solid #02923A;
+  display: flex;
+  padding: 5px;
+  border-radius: 10px;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-description {
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 16px;
+  overflow-y: auto;
+  flex: 1;
+  width: 100%;
+}
+
+.modal-add-btn {
+  padding: 20px 130px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.p{
+  z-index: 999;
+}
+@keyframes cardHighlight {
+  0%   { box-shadow: 0 0 0px 0 #02923A; }
+  50%  { box-shadow: 0 0 20px 10px #02923A}
+  100% { box-shadow: 0 0 0px 0 #02923A }
+}
+
+.card.highlight {
+  background-color: #ffffff;
+  transition: background-color 0.5s ease;
+}
+.card.highlight::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #C4C4C4 0%, #C4C4C4 100%);
+  animation: fadeGray 10s linear forwards;
+  z-index: 1;
+  pointer-events: none; /* чтобы не блокировало клики */
+}
+
+@keyframes fadeGray {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+.card.clicked {
+  background-color: #C4C4C4;
+  transition: background-color 0.5s ease;
+}
+/* Фон модалки */
+.MMM {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Контейнер модалки */
+.mmm-content {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: scaleUp 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+/* Текст */
+.mmm-text {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Контейнер кнопок */
+.mmm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* расстояние между кнопками */
+}
+
+/* Кнопки */
+.mmm-close,
+.mmm-close_2 {
+  flex: 1; /* кнопки одинаковой ширины */
+  padding: 12px 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+/* Стили отдельных кнопок */
+.mmm-close {
+  padding: 20px 50px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+.mmm-close_2 {
+    border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+    padding: 20px 50px;
+  background-color: #D9D9D9;
+  color: #474646;
+  border: 1px solid #474646;
+}
+
+
+/* Анимации */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes scaleUp {
+  from {transform: scale(0.8); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+
+/* Фон модалки */
+.TTT {
+  display: none; /* скрыто по умолчанию */
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6); /* затемнение */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Контейнер */
+.ttt-content {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: scaleUp 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+/* Текст */
+.ttt-text {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: left;
+}
+.ttt-text_2 {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 60px;
+  color: #9c9c9c;
+  font-weight: bold;
+    text-align: left;
+}
+
+/* Кнопка */
+.ttt-close {
+  padding: 20px 50px;
+  background-color: #474646; /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.ttt-close:hover {
+  background: #1e7e34;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes scaleUp {
+  from {transform: scale(0.8); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+.card.gray {
+  background-color: #c4c4c4 !important;
+}
+.s{
+  color: #575756;
+}
+.i{
+  color: #02923A;
+}
+.ZZZ {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.zzz-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  font-size: 18px;
+}
+.GGG {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.ggg-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.ggg-top {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.ggg-top img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.ggg-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.ggg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.ggg-input {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.ggg-email-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ggg-btn {
+  border: none;
+  background: #474646;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.ggg-btn img {
+  width: 20px;
+  height: 20px;
+}
+.ggg-btn:hover {
+  background: #3d3d3d;
+}
+
+.ggg-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin-top: 10px;
+  font-size: 14px;
+}
+.ggg-checkboxes a{
+  color: black;
+}
+.l{
+    text-decoration: underline;
+      font-weight: 100; /* или 400 */
+
+}/* Затемнение фона */
+.YYY {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed;
+  top: 0;          /* Исправлено */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;             /* Включаем flex */
+  justify-content: center;   /* Центр по горизонтали */
+  align-items: center;       /* Центр по вертикали */
+  z-index: 999909;
+}
+
+/* Контент модалки */
+.yyy-content {
+  background: #fff;
+  padding: 20px 0;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 280px;
+  width: calc(100% - 30px);
+}
+
+/* Текст */
+.yyy-text {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Кнопки */
+.yyy-btn {
+  padding: 15px 0px;
+  width: 80%;
+  height: 48px;
+  background-color: rgba(87, 87, 86, 1); /* цвет текста кнопки Сбросить */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.yyy-btn:hover {
+  background: #2f2f2f;
+}
+
+.n {
+  color: #02923A;
+}
+.text_error{
+    color: red;
+}
+.faf{
+  color: #02923A;
+}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103834904', 'ym');
+
+    ym(103834904, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/103834904" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+
+<div class="main-block"> <!-- Верхний блок -->
+     <div class="top-block"> 
+        <div class="container">
+             <div class="left-block">0/100</div> 
+             <div class="right-block"> 
+                <div class="item"><span>0</span><img src="img/31.png" alt="+"></div> 
+                <div class="item"><span>0</span><img src="img/32.png" alt="+"></div>
+                <div class="item"><span>0</span><img src="img/33.png" alt="+"></div>
+                <div class="item"><span>0</span><img src="img/34.png" alt="+"></div>
+            </div>
+        </div>
+    </div>
+
+  <div class="content-wrapper">
+    <div class="middle-block">
+
+      <!-- Платформа 1 -->
+      <div class="platform-shadow" data-platform="1" style="clip-path: polygon(12px 166px, 128px 98px, 209px 145px, 94px 214px);"></div>
+      <div class="platform" data-platform="1" style="clip-path: polygon(12px 166px, 128px 98px, 209px 145px, 94px 214px);">
+
+      </div>
+      <img src="img/300.png" class="platform-image" data-platform="1" style="top: 101px; left: 16px; width: 144px; height: 133px; transform: rotateX(-27deg) rotateY(0deg) rotateZ(0deg);">
+      <!-- Платформа 2 -->
+      <div class="platform-shadow" data-platform="2" style="clip-path: polygon(11px 276px, 121px 216px, 240px 286px, 135px 350px);"></div>
+      <div class="platform" data-platform="2" style="clip-path: polygon(11px 276px, 121px 216px, 240px 286px, 135px 350px);"></div>
+      <img src="img/400.png" class="platform-image" data-platform="2" style="top: 239px; left: 71px; width: 126px; height: 100px; transform: rotateX(-2deg) rotateY(2deg) rotateZ(-2deg);">
+
+      <!-- Платформа 3 -->
+      <div class="platform-shadow" data-platform="3" style="clip-path: polygon(184px 345px, 327px 424px, 241px 470px, 105px 389px);"></div>
+      <div class="platform" data-platform="3" style="clip-path: polygon(184px 345px, 327px 424px, 241px 470px, 105px 389px);"></div>
+      <img src="img/500.png" class="platform-image" data-platform="3" style="top: 387px; left: 111px; width: 176px; height: 101px; transform: rotateX(21deg) rotateY(5deg) rotateZ(-1deg);">
+
+      <!-- Платформа 4 -->
+      <div class="platform-shadow" data-platform="4" style="clip-path: polygon(150px 88px, 219px 48px, 467px 193px, 399px 233px);"></div>
+      <div class="platform" data-platform="4" style="clip-path: polygon(150px 88px, 219px 48px, 467px 193px, 399px 233px);"></div>
+      <img src="img/200.png" class="platform-image" data-platform="4" style="top: 51px; left: 154px; width: 221px; height: 177px; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+
+      <!-- Платформа 5 -->
+<!-- Платформа 5 -->
+<div class="platform-shadow" data-platform="5" style="clip-path: polygon(154px 208px, 238px 161px, 463px 294px, 411px 329px, 449px 357px, 356px 413px, 210px 332px, 286px 288px);"></div>
+<div class="platform" data-platform="5" style="clip-path: polygon(154px 208px, 238px 161px, 463px 294px, 411px 329px, 449px 357px, 356px 413px, 210px 332px, 286px 288px);"></div>
+
+<!-- Первое изображение на платформе 5 -->
+<img src="img/700.png" class="platform-image" data-platform="5" style="top: 168px; left: 155px; width: 241px; height: 161px; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+
+<!-- Второе изображение на платформе 5 -->
+<img src="img/600.png" class="platform-image" data-platform="5" style="top: 275px; left: 227px; width: 192px; height: 149px; transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+
+    </div>
+
+<div class="bottom-block">
+  <!-- Меню -->
+  <div class="bottom-menu">
+    <div class="menu-left">Технологии:</div>
+    <div class="menu-right">
+      <span>Осталось <strong class="text_i">12</strong></span>
+      <img src="img/20.svg" alt="+">
+    </div>
+  </div>
+
+  <!-- Карточки -->
+  <div class="cards-container">
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/10.png" alt="" class="card-img">
+      <div class="card-text">Робот-пылесос</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">3</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/11.png" alt="" class="card-img">
+      <div class="card-text">Электронные ценники</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">4</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/12.png" alt="" class="card-img">
+      <div class="card-text">Кассы само-обслуживания</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">3</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/13.png" alt="" class="card-img">
+      <div class="card-text">Зона сборки заказов</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/14.png" alt="" class="card-img">
+      <div class="card-text">Кофейная лаунж-зона</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">2</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/15.png" alt="" class="card-img">
+      <div class="card-text">Отдел готовой еды</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="text_i">4</span>
+        <img src="img/20.svg" alt="+">
+      </div>
+      <img src="img/16.png" alt="" class="card-img">
+      <div class="card-text">AI-ассистент</div>
+    </div>
+  </div>
+  <div class="cards-buttons">
+  <button class="btn btn-reset">Сбросить</button>
+  <button class="btn btn-complete">Завершить</button>
+</div>
+
+</div>
+
+  </div>
+
+
+</div>
+
+<div class="YYY" style="display: none;">
+  <div class="yyy-content">
+    <p class="yyy-text">Хочешь стать частью <br> технологической команды <br> «Пятёрочки»?  <br><strong class="n"> Переходи на сайт и оставляй заявку.</strong></p>
+<a href="https://fut.ru/s/5ka_game" target="_blank">
+  <button class="yyy-btn">Программа развития ДМП</button>
+</a>
+  </div>
+</div>
+
+<div class="GGG">
+  <div class="ggg-content">
+    <!-- Верхний блок с 3 картинками -->
+    <div class="ggg-top">
+      <img src="img/20.svg" alt="">
+      <img src="img/20.svg" alt="">
+      <img src="img/20.svg" alt="">
+    </div>
+
+    <!-- Текст -->
+<p class="ggg-text"></p>
+
+    <!-- Инпуты -->
+    <div class="ggg-form">
+      <input type="text" placeholder="Имя" class="ggg-input" name="name">
+      <input type="tel" placeholder="Телефон" class="ggg-input" name="phone">
+
+      <!-- Блок с почтой и кнопкой справа -->
+      <div class="ggg-email-block">
+        <input type="email" placeholder="Почта" class="ggg-input" name="email">
+        <button type="button" class="ggg-btn">
+          <img src="img/Arrow 2.png" alt="Отправить">
+        </button>
+      </div>
+    </div>
+    <p class="text_error"></p>
+
+    <!-- Чекбоксы -->
+    <div class="ggg-checkboxes">
+      <label>
+        <input type="checkbox" checked="true"> Я даю согласие на <strong class="l"><a href="https://fut.ru/personal_data_agreement">обработку</a></strong> и <strong class="l"><a href="https://fut.ru/personal_data_transfer_agreement">передачу</a></strong> моих персональных данных и соглашаюсь с<strong class="l"> <a href="https://fut.ru/personal-data">Политикой обработки персональных данных</a></strong>
+      </label>
+      <label>
+        <input type="checkbox" checked="true"> <strong class="l"><a href="https://fut.ru/adv_messages_agreement">Хочу ловить персональные стажировки от топ-компаний в рекламной рассылке</a></strong>
+      </label>
+            <label>
+        <input type="checkbox" checked="true"> <strong class="l"><a href="https://future5ka.fut.ru/agreement.pdf" target="_blank">Хочу ловить персональные предложения от Пятёрочки в рекламной рассылке</a></strong>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+    const finalScore = localStorage.getItem("finalScore") || 0;
+    const finalStats = (localStorage.getItem("finalStats") ?? []).split(',');
+
+  document.querySelector(".ggg-text").innerHTML = `
+    Ты набрал <b class="faf">${finalScore}</b> баллов и теперь <br>
+    участвуешь в розыгрыше призов!<br>
+    Оставляй свою почту ниже, чтобы присоединиться к команде:
+  `;
+import { FTClient } from "https://esm.sh/ft-client"
+
+// Инициализация клиента
+const ftClient = new FTClient(
+  "https://games-admin.fut.ru/api/",
+  "x5group-technologies"
+)
+
+// Находим элементы формы
+const nameInput = document.querySelector('.ggg-form input[type="text"]')
+const phoneInput = document.querySelector('.ggg-form input[type="tel"]')
+const emailInput = document.querySelector('.ggg-form input[type="email"]')
+const consentCheckbox   = document.querySelectorAll(".ggg-checkboxes input[type='checkbox']")[0]
+const subscribeTopCheck = document.querySelectorAll(".ggg-checkboxes input[type='checkbox']")[1]
+const subscribeX5Check  = document.querySelectorAll(".ggg-checkboxes input[type='checkbox']")[2]
+const submitBtn = document.querySelector('.ggg-btn')
+const textError = document.querySelector('.text_error')
+const text_button = document.querySelector(".ggg-btn");
+const errorModal = document.querySelector(".YYY");
+const div = document.querySelector(".GGG");
+const statItems = document.querySelectorAll(".right-block .item span");
+statItems.forEach((span,i)=>span.textContent=finalStats[i]);
+document.querySelector(".left-block").textContent = `${finalScore}/100`;
+consentCheckbox.checked = true;
+subscribeTopCheck.checked = true;
+subscribeX5Check.checked = true;
+// === Автоподстановка +7 при клике ===
+phoneInput.addEventListener("focus", () => {
+  if (!phoneInput.value.startsWith("+7")) {
+    phoneInput.value = "+7"
+  }
+})
+
+// === Ограничение на ввод — только цифры после +7 ===
+phoneInput.addEventListener("input", () => {
+  if (!phoneInput.value.startsWith("+7")) {
+    phoneInput.value = "+7"
+  }
+  phoneInput.value = "+7" + phoneInput.value.slice(2).replace(/\D/g, "")
+})
+
+submitBtn.addEventListener('click', async () => {
+  textError.innerHTML = ""
+
+  const name = nameInput.value.trim()
+  const phone = phoneInput.value.trim()
+  const email = emailInput.value.trim()
+
+  // Проверка пустых полей
+  if (!name && !phone && !email) {
+    textError.innerHTML = "Заполните все поля (Имя, Телефон, Почта)."
+    return
+  }
+    // Проверка пустых полей
+  if (!name && !phone) {
+    textError.innerHTML = "Заполните поля (Имя, Телефон)."
+    return
+  }
+    if (!name && !email) {
+    textError.innerHTML = "Заполните поля (Телефон, Почта)."
+    return
+  }
+      if (!phone && !email) {
+    textError.innerHTML = "Заполните поля (Телефон, Почта)."
+    return
+  }
+    // Проверка пустых полей
+  if (!name) {
+    textError.innerHTML = "Заполните поля (Имя)."
+    return
+  }
+    if (!phone) {
+    textError.innerHTML = "Заполните поля (Телефон)."
+    return
+  }
+      if (!email) {
+    textError.innerHTML = "Заполните поля (Почта)."
+    return
+  }
+
+  // Проверка телефона (должно быть не меньше 12 символов: +7 и 10 цифр)
+  if (phone.length < 12) {
+    textError.innerHTML = "Введите корректный телефон (пример: +7XXXXXXXXXX)."
+    return
+  }
+
+  // Проверка email
+  if (!email.includes("@")) {
+    textError.innerHTML = "Введите корректный адрес электронной почты."
+    return
+  }
+
+  // Проверка согласия
+  if (!consentCheckbox.checked) {
+    textError.innerHTML = "Нужно дать согласие на обработку данных."
+    return
+  }
+
+  try {
+    const data = {
+      name: name,
+      phone: phone,
+      email: email,
+      isSubscribed: subscribeTopCheck.checked, 
+      isSub: subscribeX5Check.checked
+    }
+
+    const newRecord = await ftClient.createRecord(data);
+    
+    ym?.(103834904,'reachGoal','mail');
+
+    console.log("new record ID:", newRecord.id)
+    console.log("saved fields:", data)
+
+    document.querySelector(".GGG").style.display = "none"
+    errorModal.style.display = "flex"  // можно сразу показать следующий блок
+  } catch (err) {
+    console.error("Ошибка при сохранении:", err)
+    textError.innerHTML = "Ошибка при отправке данных."
+  }
+})
+</script>
+</body>
+</html>
